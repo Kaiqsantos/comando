@@ -3,7 +3,7 @@ export default async function handler(req, res) {
   const response = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/teams/${teamId}`);
   const data = await response.json();
 
-  const nextEvent = data.team.nextEvent?.[0];
+  const nextEvent = data.team.nextEvent[0];
 
   const competitors = nextEvent.competitions[0].competitors;
   const localizacao = nextEvent.competitions[0].venue;
