@@ -1,13 +1,37 @@
-export default function handler(req, res) {
-  const query = req.query.q || '';
+export default async function handler(req, res) {
+  try {
+    const response = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/all/teams/5');
+    const data = await response.json();
 
-  let resposta = "";
-  
-  if (query.toLowerCase() === "ola") {
-    resposta = "Olá! Este é um comando processado fora do Nightbot!";
-  } else {
-    resposta = `Você disse: ${query}. Meu código gigante processou isso na Vercel!`;
+    const nextEvent = data.team.nextEvent?.[0];
+    
+    if (!nextEvent) {
+      return res.status(200).send("⚽ No hay partidos programados para 💙Boca💛 en este momento. ⚽");
+    }
+
+    const competitors = nextEvent.competitions[0].competitors;
+    const bocaIndex = competitors[0].id == 5 ? 0 : 1; 
+    const boca = competitors[bocaIndex];
+    const opponent = competitors[1 - bocaIndex];
+
+    const dateObj = new Date(nextEvent.date);
+    
+    const dateOptions = { timeZone: 'America/Buenos_Aires', year: 'numeric', month: '2-digit', day: '2-digit' };
+    const timeOptions = { timeZone: 'America/Buenos_Aires', hour: '2-digit', minute: '2-digit', hour12: false };
+    
+    const dateStr = new Intl.DateTimeFormat('pt-BR', dateOptions).format(dateObj);
+    const timeStr = new Intl.DateTimeFormat('pt-BR', timeOptions).format(dateObj);
+
+    const isHome = boca.homeAway === 'home' || boca.homeAway[0] === 'h';
+    const homeAwayStr = isHome ? "🏟 local" : "✈ visitante";
+
+    const result = `⚽ El próximo partido de 💙Boca💛 será ${dateStr} às ${timeStr}hrs como ${homeAwayStr} contra ${opponent.team.displayName} ⚽`;
+
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    return res.status(200).send(result);
+
+  } catch (error) {
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    return res.status(500).send("⚽ Error al obtener la información del partido. ⚽");
   }
-  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  res.status(200).send(resposta);
 }
