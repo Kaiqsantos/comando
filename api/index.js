@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     const time = competitors[bocaIndex];
     const adversario = competitors[1 - bocaIndex];
     const dateObj = new Date(nextEvent.date);
-    const nome = teamId === '5' ? "💙Boca💛" : teamId === '3457' ? "❤️River🖤" : teamName;
+    const nome = teamId === '5' ? "💙Boca💛" : teamId === '3457' ? "❤️Vitoria🖤" : teamName;
     const dateOptions = { timeZone: 'America/Buenos_Aires', year: 'numeric', month: '2-digit', day: '2-digit' };
     const timeOptions = { timeZone: 'America/Buenos_Aires', hour: '2-digit', minute: '2-digit', hour12: false };
     
