@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     const isHome = time.homeAway === 'home' || time.homeAway[0] === 'h';
     const homeAwayStr = isHome ? "🏟 local" : "✈ visitante";
 
-    const result = `⚽ El próximo partido de ${nome} será ${dateStr} a las ${timeStr}hrs como ${homeAwayStr} en contra ${adversario.team.displayName} ⚽`;
+    const result = `⚽ El próximo partido de ${nome} será ${dateStr} a las ${timeStr}hrs como ${homeAwayStr} en ${nextEvent.competitions[0].venue.fullName} contra ${adversario.team.displayName} ⚽`;
     // f"A próxima partida do {time['team']['displayName']} será {data_br:%d/%m/%Y} às {data_br:%H:%M}hrs como {'mandante' if time['homeAway']=='home' else 'visitante'}
     // no {next_event['competitions'][0]['venue']['fullName']} contra o {adversario['team']['displayName']} em
     // {next_event['competitions'][0]['venue']['address']['city']}-{next_event['competitions'][0]['venue']['address']['country']} válido pela {next_event['seasonType']['abbreviation']} da {next_event['season']['displayName']}"
