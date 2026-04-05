@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   const teamId = req.query.id || '5';
   try {
-    const response = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/all/teams/5');
+    const response = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/teams/${teamId}`);
     const data = await response.json();
 
     const nextEvent = data.team.nextEvent?.[0];
