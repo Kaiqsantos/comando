@@ -1,4 +1,5 @@
 export default async function handler(req, res) {
+  const teamId = req.query.id || '5';
   try {
     const response = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/all/teams/5');
     const data = await response.json();
@@ -26,6 +27,7 @@ export default async function handler(req, res) {
     const homeAwayStr = isHome ? "🏟 local" : "✈ visitante";
 
     const result = `⚽ El próximo partido de 💙Boca💛 será ${dateStr} às ${timeStr}hrs como ${homeAwayStr} contra ${opponent.team.displayName} ⚽`;
+    // f"A próxima partida do {time['team']['displayName']} será {data_br:%d/%m/%Y} às {data_br:%H:%M}hrs como {'mandante' if time['homeAway']=='home' else 'visitante'} no {next_event['competitions'][0]['venue']['fullName']} contra o {adversario['team']['displayName']} em {next_event['competitions'][0]['venue']['address']['city']}-{next_event['competitions'][0]['venue']['address']['country']} válido pela {next_event['seasonType']['abbreviation']} da {next_event['season']['displayName']}"
 
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     return res.status(200).send(result);
