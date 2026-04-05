@@ -5,10 +5,6 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     const nextEvent = data.team.nextEvent?.[0];
-    
-    if (!nextEvent) {
-      return res.status(200).send("⚽ No hay partidos programados para 💙Boca💛 en este momento. ⚽");
-    }
 
     const competitors = nextEvent.competitions[0].competitors;
     const bocaIndex = competitors[0].id == teamId ? 0 : 1; 
@@ -25,7 +21,7 @@ export default async function handler(req, res) {
     const isHome = time.homeAway === 'home' || time.homeAway[0] === 'h';
     const homeAwayStr = isHome ? "🏟 local" : "✈ visitante";
 
-    const result = `⚽ El próximo partido de ${nome} será ${dateStr} a las ${timeStr}hrs como ${homeAwayStr} en ${nextEvent.competitions[0].venue.fullName} en la ciudad de ${nextEvent.competitions[0].venue.address.city}-${nextEvent.competitions[0].venue.address.country} contra ${adversario.team.displayName} ⚽`;
+    const result = `⚽ El próximo partido de ${nome} será ${dateStr} a las ${timeStr}hrs como ${homeAwayStr} en ${nextEvent.competitions[0].venue.fullName} en la ciudad de ${nextEvent.competitions[0].venue.address.city}-${nextEvent.competitions[0].venue.address.country} contra ${adversario.team.displayName} valido por ${nextEvent.seasonType.abbreviation} de ${nextEvent.season.displayName}⚽`;
     // f"A próxima partida do {time['team']['displayName']} será {data_br:%d/%m/%Y} às {data_br:%H:%M}hrs como {'mandante' if time['homeAway']=='home' else 'visitante'}
     // no {next_event['competitions'][0]['venue']['fullName']} contra o {adversario['team']['displayName']} em
     // {next_event['competitions'][0]['venue']['address']['city']}-{next_event['competitions'][0]['venue']['address']['country']} válido pela {next_event['seasonType']['abbreviation']} da {next_event['season']['displayName']}"
