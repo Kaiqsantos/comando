@@ -14,7 +14,6 @@ export default async function handler(req, res) {
     const bocaIndex = competitors[0].id == teamId ? 0 : 1; 
     const time = competitors[bocaIndex];
     const opponent = competitors[1 - bocaIndex];
-    const nome = teamId === '5' ? "💙Boca💛" : teamId === '3457' ? "❤️Vitória🖤" : teamName;
     const dateObj = new Date(nextEvent.date);
     
     const dateOptions = { timeZone: 'America/Buenos_Aires', year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -26,7 +25,7 @@ export default async function handler(req, res) {
     const isHome = time.homeAway === 'home' || time.homeAway[0] === 'h';
     const homeAwayStr = isHome ? "🏟 local" : "✈ visitante";
 
-    const result = `⚽ El próximo partido de ${nome} será ${dateStr} a las ${timeStr}hrs como ${homeAwayStr} en ${nextevent.competitions[0].venue.fullName} contra ${opponent.team.displayName} ⚽`;
+    const result = `⚽ El próximo partido de ${time.team.displayName} será ${dateStr} a las ${timeStr}hrs como ${homeAwayStr} en ${nextevent.competitions[0].venue.fullName} contra ${opponent.team.displayName} ⚽`;
     // f"A próxima partida do {time['team']['displayName']} será {data_br:%d/%m/%Y} às {data_br:%H:%M}hrs como {'mandante' if time['homeAway']=='home' else 'visitante'}
     // no {next_event['competitions'][0]['venue']['fullName']} contra o {adversario['team']['displayName']} em
     // {next_event['competitions'][0]['venue']['address']['city']}-{next_event['competitions'][0]['venue']['address']['country']} válido pela {next_event['seasonType']['abbreviation']} da {next_event['season']['displayName']}"
